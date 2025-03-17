@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+
+class CustomTextFields extends StatelessWidget {
+  final TextEditingController textEditingController;
+  final String hintText;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final Widget? prefixIcon;
+  final Widget? suffixIcon;
+  final FocusNode? focusNode;
+  final String? Function(String?)? validator;
+
+  const CustomTextFields(
+      {super.key,
+      required this.textEditingController,
+      required this.hintText,
+      this.obscureText = false,
+      this.keyboardType,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.focusNode,
+      this.validator});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: textEditingController,
+      obscureText: obscureText,
+      keyboardType: keyboardType,
+      focusNode: focusNode,
+      validator: validator,
+      decoration: InputDecoration(
+        hintText: hintText,
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon,
+      ),
+    );
+  }
+}
