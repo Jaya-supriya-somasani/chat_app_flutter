@@ -141,14 +141,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                         fontWeight: FontWeight.bold),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
+                                        ///used to add onTop functionality
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     SignUpScreen()));
                                       })
-
-                                ///used to add onTop functionality
                               ]),
                         ),
                       )
