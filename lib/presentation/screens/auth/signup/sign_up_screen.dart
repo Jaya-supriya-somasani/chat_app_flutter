@@ -22,7 +22,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
 
-  final _isPasswordVisible = false;
+  bool _isPasswordVisible = false;
   final _nameFocusNode = FocusNode();
   final _emailFocusNode = FocusNode();
   final _passwordFocusNode = FocusNode();
@@ -109,17 +109,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           .textTheme
                           .headlineMedium
                           ?.copyWith(fontWeight: FontWeight.bold)),
-                  SizedBox(
-                    height: 10,
-                  ),
+                  SizedBox(height: 10),
                   Text("Please fill the details to continue",
                       style: Theme.of(context)
                           .textTheme
                           .bodyLarge
                           ?.copyWith(color: Colors.grey)),
-                  SizedBox(
-                    height: 10
-                  ),
+                  SizedBox(height: 10),
                   CustomTextFields(
                     textEditingController: nameController,
                     hintText: "Full Name",
@@ -145,23 +141,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   SizedBox(height: 20),
                   CustomTextFields(
-                      textEditingController: phoneNumberController,
-                      hintText: "Phone Number",
-                      prefixIcon: Icon(Icons.phone_outlined),
-                  validator: _validatePhone,
-                  focusNode: _phoneNumberFocusNode,),
+                    textEditingController: phoneNumberController,
+                    hintText: "Phone Number",
+                    prefixIcon: Icon(Icons.phone_outlined),
+                    validator: _validatePhone,
+                    focusNode: _phoneNumberFocusNode,
+                  ),
                   SizedBox(height: 20),
                   CustomTextFields(
-                    textEditingController: passwordController,
-                    hintText: "Password",
-                    prefixIcon: Icon(Icons.lock_outline),
-                    suffixIcon: Icon(Icons.visibility),
-                    validator: _validatePassword,
-                    focusNode: _passwordFocusNode,
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+                      textEditingController: passwordController,
+                      hintText: "Password",
+                      prefixIcon: Icon(Icons.lock_outline),
+                      suffixIcon: IconButton(
+                          icon: Icon(_isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          }),
+                      validator: _validatePassword,
+                      focusNode: _passwordFocusNode),
+                  SizedBox(height: 20),
                   CustomGradientButton(
                       text: "Sign in",
                       onPressed: () {
@@ -176,9 +178,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         AppTheme.primaryColor
                       ],
                       borderRadius: AppSizes.size8),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Center(
                     child: RichText(
                       text: TextSpan(

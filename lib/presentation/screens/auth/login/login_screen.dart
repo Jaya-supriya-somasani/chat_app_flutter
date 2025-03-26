@@ -23,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   final _emailFocusNode = FocusNode();
-
   final _passwordFocusNode = FocusNode();
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (value == null || value.isEmpty) {
       return "Please enter email address";
     }
-    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    final emailRegex = RegExp(r'^[\w-]+@([\w-]+\.)+[\w-]{2,4}$');
     if (!emailRegex.hasMatch(value)) {
       return 'Please enter a valid email address (e.g., example@email.com)';
     }
@@ -96,8 +96,17 @@ class _LoginScreenState extends State<LoginScreen> {
                         textEditingController: passwordController,
                         hintText: AppConstants.password,
                         prefixIcon: Icon(Icons.lock_outline),
-                        obscureText: true,
-                        suffixIcon: Icon(Icons.visibility),
+                        obscureText: !_isPasswordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(_isPasswordVisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
                         validator: _validatePassword,
                         focusNode: _passwordFocusNode,
                       ),
